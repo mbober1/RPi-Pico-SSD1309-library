@@ -51,6 +51,16 @@ enum class colors {
 	INVERSE
 };
 
+enum class scrollInterval {
+	FRAMES_5,
+	FRAMES_64,
+	FRAMES_128,
+	FRAMES_256,
+	FRAMES_2,
+	FRAMES_3,
+	FRAMES_4,
+	FRAMES_1
+};
 
 
 class SSD1309 {
@@ -75,6 +85,10 @@ class SSD1309 {
 		void invertColors(uint8_t Invert);
 		void rotateDisplay(uint8_t Rotate);
 		void setContrast(uint8_t Contrast);
+		void scrollVerticalyLeft(uint8_t startColumn, uint8_t endColumn, uint8_t startRow, uint8_t endRow, scrollInterval interval, uint8_t horizontal, uint8_t scrollingOffset);
+		void scrollHorizontalLeft(uint8_t startColumn, uint8_t endColumn, uint8_t startRow, uint8_t endRow, scrollInterval interval);
+		void scrollVerticalyRight(uint8_t startColumn, uint8_t endColumn, uint8_t startRow, uint8_t endRow, scrollInterval interval, uint8_t horizontal, uint8_t scrollingOffset);
+		void scrollHorizontalRight(uint8_t startColumn, uint8_t endColumn, uint8_t startRow, uint8_t endRow, scrollInterval interval);
 
 		void drawPixel(int16_t x, int16_t y, colors Color = colors::WHITE);
 		void clear(colors Color = colors::BLACK);

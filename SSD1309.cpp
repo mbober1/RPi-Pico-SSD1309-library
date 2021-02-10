@@ -203,3 +203,142 @@ uint8_t SSD1309::getWidth()
 {
 	return this->width;
 }
+
+/*!
+ * @brief Rotate display.
+ *
+ */
+void SSD1309::rotateDisplay(uint8_t Rotate)
+{
+	if(Rotate) {
+		this->sendCommand(SSD1309_setSegmentMapFlipped);
+		this->sendCommand(SSD1309_setCOMoutputFlipped);
+	} else {
+		this->sendCommand(SSD1309_setSegmentMapReset);
+		this->sendCommand(SSD1309_setCOMoutputNormal);
+	}
+}
+
+
+/*!
+    @brief  Scroll part of display horyzontaly to the right.
+    @param  startColumn
+            0-127 Start of the scroll area.
+    @param  endColumn
+            0-127 End of the scroll area. Must be larger than or equal to startColumn.
+    @param  startRow
+            0-7 Start of the scroll area. 
+    @param  endRow
+            0-7 End of the scroll area. Must be larger than or equal to startRow.
+    @param  interval
+            Interval between each scroll step.
+    @return SSD1309 object.
+*/
+void SSD1309::scrollHorizontalRight(uint8_t startColumn, uint8_t endColumn, uint8_t startRow, uint8_t endRow, scrollInterval interval)
+{
+	this->sendCommand(SSD1309_deactivateScroll);
+	this->sendCommand(SSD1309_contHScrollSetupRight);
+	this->sendCommand(0x00);
+	this->sendCommand(startRow);
+	this->sendCommand(static_cast<uint8_t>(interval));
+	this->sendCommand(endRow);
+	this->sendCommand(0x00);
+	this->sendCommand(startColumn);
+	this->sendCommand(endColumn);
+	this->sendCommand(SSD1309_activateScroll);
+}
+
+
+/*!
+    @brief  Scroll part of display horyzontaly to the left.
+    @param  startColumn
+            0-127 Start of the scroll area.
+    @param  endColumn
+            0-127 End of the scroll area. Must be larger than or equal to startColumn.
+    @param  startRow
+            0-7 Start of the scroll area. 
+    @param  endRow
+            0-7 End of the scroll area. Must be larger than or equal to startRow.
+    @param  interval
+            Interval between each scroll step.
+    @return SSD1309 object.
+*/
+void SSD1309::scrollHorizontalLeft(uint8_t startColumn, uint8_t endColumn, uint8_t startRow, uint8_t endRow, scrollInterval interval)
+{
+	this->sendCommand(SSD1309_deactivateScroll);
+	this->sendCommand(SSD1309_contHScrollSetupLeft);
+	this->sendCommand(0x00);
+	this->sendCommand(startRow);
+	this->sendCommand(static_cast<uint8_t>(interval));
+	this->sendCommand(endRow);
+	this->sendCommand(0x00);
+	this->sendCommand(startColumn);
+	this->sendCommand(endColumn);
+	this->sendCommand(SSD1309_activateScroll);
+}
+
+
+/*!
+    @brief  Scroll part of display verticaly and horyzontaly to the left.
+    @param  startColumn
+            0-127 Start of the scroll area.
+    @param  endColumn
+            0-127 End of the scroll area. Must be larger than or equal to startColumn.
+    @param  startRow
+            0-7 Start of the scroll area. 
+    @param  endRow
+            0-7 End of the scroll area. Must be larger than or equal to startRow.
+    @param  interval
+            Interval between each scroll step.
+	@param  horizontal
+            1 - Turn on horizontal scroll, 0 - Turn off horizontal scroll.
+	@param  scrollingOffset
+            Vertical scrolling offset.
+    @return SSD1309 object.
+*/
+void SSD1309::scrollVerticalyLeft(uint8_t startColumn, uint8_t endColumn, uint8_t startRow, uint8_t endRow, scrollInterval interval, uint8_t horizontal, uint8_t scrollingOffset)
+{
+	this->sendCommand(SSD1309_deactivateScroll);
+	this->sendCommand(SSD1309_contVHScrollSetupLeft);
+	this->sendCommand(horizontal);
+	this->sendCommand(startRow);
+	this->sendCommand(static_cast<uint8_t>(interval));
+	this->sendCommand(endRow);
+	this->sendCommand(scrollingOffset);
+	this->sendCommand(startColumn);
+	this->sendCommand(endColumn);
+	this->sendCommand(SSD1309_activateScroll);
+}
+
+
+/*!
+    @brief  Scroll part of display verticaly and horyzontaly to the right.
+    @param  startColumn
+            0-127 Start of the scroll area.
+    @param  endColumn
+            0-127 End of the scroll area. Must be larger than or equal to startColumn.
+    @param  startRow
+            0-7 Start of the scroll area. 
+    @param  endRow
+            0-7 End of the scroll area. Must be larger than or equal to startRow.
+    @param  interval
+            Interval between each scroll step.
+	@param  horizontal
+            1 - Turn on horizontal scroll, 0 - Turn off horizontal scroll.
+	@param  scrollingOffset
+            Vertical scrolling offset.
+    @return SSD1309 object.
+*/
+void SSD1309::scrollVerticalyRight(uint8_t startColumn, uint8_t endColumn, uint8_t startRow, uint8_t endRow, scrollInterval interval, uint8_t horizontal, uint8_t scrollingOffset)
+{
+	this->sendCommand(SSD1309_deactivateScroll);
+	this->sendCommand(SSD1309_contVHScrollSetupRight);
+	this->sendCommand(horizontal);
+	this->sendCommand(startRow);
+	this->sendCommand(static_cast<uint8_t>(interval));
+	this->sendCommand(endRow);
+	this->sendCommand(scrollingOffset);
+	this->sendCommand(startColumn);
+	this->sendCommand(endColumn);
+	this->sendCommand(SSD1309_activateScroll);
+}

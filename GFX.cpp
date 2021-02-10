@@ -3,10 +3,8 @@
 
 GFX::GFX(uint16_t const DevAddr, uint8_t const width, uint8_t const height, i2c_inst_t * i2c, uint8_t resetPin) : SSD1309(DevAddr, width, height, i2c, resetPin) {};
 
-/*!
- * @brief Send command to display.
- *
- */
+void GFX::swap(int a, int b) { int t = a; a = b; b = t; }
+
 void GFX::drawChar(int x, int y, char chr, colors color)
 {
 	if(chr > 0x7E) return; // chr > '~'
@@ -25,11 +23,8 @@ void GFX::drawChar(int x, int y, char chr, colors color)
     }
 }
 
-/*!
- * @brief Send command to display.
- *
- */
-void GFX::drawString(int x, int y, char* str, colors color)
+
+void GFX::drawCharArray(int x, int y, char* str, colors color)
 {
 	int x_tmp = x;
 	char znak;
@@ -43,10 +38,7 @@ void GFX::drawString(int x, int y, char* str, colors color)
 }
 
 
-/*!
- * @brief Send command to display.
- *
- */
+
 void GFX::drawString(int x, int y, std::string str, colors color)
 {
 	int x_tmp = x;
@@ -60,10 +52,6 @@ void GFX::drawString(int x, int y, std::string str, colors color)
 }
 
 
-/*!
- * @brief Send command to display.
- *
- */
 void GFX::drawRectangle(int x, int y, uint16_t w, uint16_t h, colors color)
 {
     this->drawFastHLine(x, y, w, color);
@@ -72,10 +60,7 @@ void GFX::drawRectangle(int x, int y, uint16_t w, uint16_t h, colors color)
     this->drawFastVLine(x+w-1, y, h, color);
 }
 
-/*!
- * @brief Send command to display.
- *
- */
+
 void GFX::drawFillRectangle(int x, int y, uint16_t w, uint16_t h, colors color)
 {
     for (int i=x; i<x+w; i++) {
@@ -84,10 +69,7 @@ void GFX::drawFillRectangle(int x, int y, uint16_t w, uint16_t h, colors color)
 }
 
 
-/*!
- * @brief Send command to display.
- *
- */
+
 void GFX::drawProgressBar(int x, int y, uint16_t w, uint16_t h, uint8_t progress, colors color)
 {
 	if(progress<0) progress = 0;
@@ -97,43 +79,30 @@ void GFX::drawProgressBar(int x, int y, uint16_t w, uint16_t h, uint8_t progress
 }
 
 
-
-/*!
- * @brief Send command to display.
- *
- */
 void GFX::drawFastVLine(int x_start, int y_start, int h, colors color)
 {
 	this->writeLine(x_start, y_start, x_start, y_start+h-1, color);
 }
 
 
-/*!
- * @brief Send command to display.
- *
- */
 void GFX::drawFastHLine(int x_start, int y_start, int w, colors color)
 {
 	this->writeLine(x_start, y_start, x_start+w-1, y_start, color);
 }
 
 
-/*!
- * @brief Send command to display.
- *
- */
 void GFX::writeLine(int x_start, int y_start, int x_end, int y_end, colors color)
 {
 	int16_t steep = abs(y_end - y_start) > abs(x_end - x_start);
 
 	    if (steep) {
-	        _swap_int(x_start, y_start);
-	        _swap_int(x_end, y_end);
+	        this->swap(x_start, y_start);
+	        this->swap(x_end, y_end);
 	    }
 
 	    if (x_start > x_end) {
-	        _swap_int(x_start, x_end);
-	        _swap_int(y_start, y_end);
+	        this->swap(x_start, x_end);
+	        this->swap(y_start, y_end);
 	    }
 
 	    int16_t dx, dy;

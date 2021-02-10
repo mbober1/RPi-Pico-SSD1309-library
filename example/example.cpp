@@ -20,17 +20,17 @@ int main() {
 
     GFX oled(0x3C, 128, 64, i2c1, RESET_PIN); //Declare oled instance
 
-    oled.display(logo);                     //Display bitmap
+    oled.display(logo);
+    
+    sleep_ms(1000);        
 
-    while(true) 
-    {
-        sleep_ms(1000);
-        oled.clear();                       //Clear buffer
-        oled.drawString(0, 0, "Raspberry Pico");
-        oled.drawString(0, 10, "Oled Example");
-        oled.drawString(0, 20, "Have fun!");
-        oled.drawProgressBar(0, oled.getHeight()-10, oled.getWidth(), 10, rand() % 100 + 1);
-        oled.display();                     //Send buffer to the screen
-    }
+    oled.clear();
+    oled.drawString(22, 0, "Raspberry Pico");
+    oled.drawString(18, 16, "SSD1309 library");
+    oled.drawString(10, 35, "github.com/mbober1");
+    oled.drawProgressBar(4, oled.getHeight()-10, oled.getWidth() -4, 10, 69);
+    oled.display();
+    oled.scrollHorizontalRight(0, 127, 3, 5, scrollInterval::FRAMES_1);
+
     return 0;
 }
