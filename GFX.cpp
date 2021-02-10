@@ -3,7 +3,6 @@
 
 GFX::GFX(uint16_t const DevAddr, uint8_t const width, uint8_t const height, i2c_inst_t * i2c, uint8_t resetPin) : SSD1309(DevAddr, width, height, i2c, resetPin) {};
 
-void GFX::swap(int a, int b) { int t = a; a = b; b = t; }
 
 void GFX::drawChar(int x, int y, char chr, colors color)
 {
@@ -96,13 +95,13 @@ void GFX::writeLine(int x_start, int y_start, int x_end, int y_end, colors color
 	int16_t steep = abs(y_end - y_start) > abs(x_end - x_start);
 
 	    if (steep) {
-	        this->swap(x_start, y_start);
-	        this->swap(x_end, y_end);
+	        _swap_int(x_start, y_start);
+	        _swap_int(x_end, y_end);
 	    }
 
 	    if (x_start > x_end) {
-	        this->swap(x_start, x_end);
-	        this->swap(y_start, y_end);
+	        _swap_int(x_start, x_end);
+	        _swap_int(y_start, y_end);
 	    }
 
 	    int16_t dx, dy;

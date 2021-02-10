@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <string>
 
+#define _swap_int(a, b) { int t = a; a = b; b = t; }
 
 
 class GFX : public SSD1309 {
