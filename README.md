@@ -1,4 +1,5 @@
 # Raspberry Pico SSD1309 + GFX Library
+![IMG_20210210_142918](https://user-images.githubusercontent.com/44072895/107516326-88498a80-6bac-11eb-9c38-2ffe16fbd6ac.jpg)
 
 # Usage
 
